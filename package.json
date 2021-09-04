@@ -1,0 +1,16 @@
+{
+  "name": "test-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently npm:start:client npm:start:server",
+    "start:client": "cd packages/client && npm start",
+    "start:server": "cd packages/server && npm start",
+    "install": "sh ./scripts/install.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1"
+  },
+  "dependencies": {
+    "react-declarative": "^1.5.15"
+  }
+}
