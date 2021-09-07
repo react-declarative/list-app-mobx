@@ -1,6 +1,8 @@
 import { makeObservable } from "mobx";
 import { action } from "mobx";
 
+import { v4 as uuidv4 } from 'uuid';
+
 import errorData from "../../utils/errorData";
 
 import SessionService from "./SessionService";
@@ -102,6 +104,7 @@ export class ApiService {
               [CC_TOKEN]: this.sessionService.sessionId,
             })),
             'Content-type': 'application/json',
+            'X-Trace-Id': uuidv4(),
           },
           body: JSON.stringify(data),
         });
@@ -163,6 +166,7 @@ export class ApiService {
         xhr.open('POST', url.toString(), true);
       }
       this.sessionService.sessionId && xhr.setRequestHeader(CC_TOKEN, this.sessionService.sessionId);
+      xhr.setRequestHeader('X-Trace-Id', uuidv4());
       xhr.onload = () => {
         try {
           const json = JSON.parse(xhr.responseText) as T;
