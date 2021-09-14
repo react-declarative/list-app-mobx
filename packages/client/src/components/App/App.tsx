@@ -20,7 +20,12 @@ export const App = ({
   };
   return (
     <Scaffold onOptionClick={handleMenuClick} options={options}>
-      <Switch history={routerService} items={routes} />
+      <Switch
+        Loading={() => <p>Checking permissions (mock)</p>}
+        NotFound={() => <p>Not found(</p>}
+        history={routerService}
+        items={routes}
+      />
     </Scaffold>
   );
 };
