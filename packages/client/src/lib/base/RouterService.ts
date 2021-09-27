@@ -1,30 +1,21 @@
 import { makeObservable } from "mobx";
-import { observable, computed, action } from "mobx";
+import { observable, action } from "mobx";
 
 import { Action, Blocker, Listener, State, To, Location, BrowserHistory } from "history";
 
 import { createBrowserHistory } from "history";
-import { createObservableHistory } from "mobx-observable-history";
 
 const browserHistory = createBrowserHistory();
 
 export class RouterService implements BrowserHistory {
 
-  routerHistory = createObservableHistory(browserHistory);
-
-  get location(): Location {
-    return this.routerHistory.location;
-  }
-
-  get action(): Action {
-    return this.routerHistory.action;
-  }
+  location: Location = null as never;
+  action: Action = null as never;
 
   constructor() {
     makeObservable(this, {
-      routerHistory: observable,
-      location: computed,
-      action: computed,
+      location: observable,
+      action: observable,
       createHref: action.bound,
       push: action.bound,
       replace: action.bound,
@@ -33,39 +24,62 @@ export class RouterService implements BrowserHistory {
       forward: action.bound,
       listen: action.bound,
       block: action.bound,
+      updateState: action.bound,
     });
   }
 
+  updateState() {
+    const { location, action } = browserHistory;
+    this.location = location;
+    this.action = action;
+  }
+
   createHref(to: To) {
-    return this.routerHistory.createHref(to);
+    const result = browserHistory.createHref(to);
+    this.updateState();
+    return result;
   }
 
   push(to: To, state?: State) {
-    return this.routerHistory.push(to, state);
+    const result = browserHistory.push(to, state);
+    this.updateState();
+    return result;
   }
 
   replace(to: To, state?: State) {
-    return this.routerHistory.replace(to, state);
+    const result = browserHistory.replace(to, state);
+    this.updateState();
+    return result;
   }
 
   go(delta: number) {
-    return this.routerHistory.go(delta);
+    const result = browserHistory.go(delta);
+    this.updateState();
+    return result;
   }
 
   back() {
-    return this.routerHistory.back();
+    const result = browserHistory.back();
+    this.updateState();
+    return result;
   }
 
   forward() {
-    return this.routerHistory.forward();
+    const result = browserHistory.forward();
+    this.updateState();
+    return result;
   }
 
   listen(listener: Listener) {
-    return this.routerHistory.listen(listener);
+    const result = browserHistory.listen(listener);
+    this.updateState();
+    return result;
   }
 
   block(blocker: Blocker) {
-    return this.routerHistory.block(blocker);
+    const result = browserHistory.block(blocker);
+    this.updateState();
+    return result;
   }
 };
 
