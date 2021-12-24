@@ -15,8 +15,12 @@ interface IAppPrivate {
 export const App = ({
   routerService,
 }: IAppPrivate) => {
-  const handleMenuClick = () => {
-    routerService.push('/');
+  const handleMenuClick = (name: string) => {
+    if (name === 'home-page') {
+      routerService.push('/');
+    } else if (name === 'some-list') {
+      routerService.push('/some-list');
+    }
   };
   return (
     <Scaffold onOptionClick={handleMenuClick} options={options}>

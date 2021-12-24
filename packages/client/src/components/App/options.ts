@@ -2,8 +2,12 @@ import { IMenuGroup } from "react-declarative";
 
 export const options: IMenuGroup[] = [
     {
+        label: 'Home',
+        name: 'home-page',
+    },
+    {
         label: 'List',
-        name: 'list-page',
+        name: 'some-list',
     },
 ];
 
