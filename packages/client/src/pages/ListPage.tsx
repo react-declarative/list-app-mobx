@@ -115,11 +115,11 @@ export const ListPage = ({
   };
 
   const handleClick = (person: IPerson) => {
-    routerService.push(`/${person.id}`);
+    routerService.push(`/some-list/${person.id}`);
   };
 
   const handleCreate = () => {
-    routerService.push(`/create`);
+    routerService.push(`/some-list/create`);
   };
 
   return (
